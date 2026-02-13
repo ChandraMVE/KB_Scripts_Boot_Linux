@@ -1,0 +1,42 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          flash_emmc
+# Required-Start:    $local_fs
+# Default-Start:     S
+# Short-Description: Flash eMMC from SD card
+### END INIT INFO
+
+FLASH_SCRIPT="/root/Lnx_Upgrade.sh"
+UPGRADEING_LNX='/opt/Upgrade'
+UPGRADE_LNX_COMPLETE='/opt/lnx_Upgrade_critical'
+UPGRADE_LNX_FAIL='/opt/Upgrade_failed'
+case "$1" in
+    start)
+        echo "=== eMMC Flash Init Script ==="
+
+        if [ -x "$FLASH_SCRIPT" ]; then
+            echo "Starting eMMC flashing..."
+			"$UPGRADEING_LNX" &
+            "$FLASH_SCRIPT"
+            if [ $? -eq 0 ]; then
+                sync
+                echo "Linux Upgrade Successful"
+				kill -9 $(pidof Upgrade)
+				sleep 2
+				"$UPGRADE_LNX_COMPLETE"
+            else
+                echo "Linux Upgrade FAILED"
+				kill -9 $(pidof Upgrade)
+				sleep 2
+				"$UPGRADE_LNX_FAIL"
+            fi
+        else
+            echo "Linux Upgrade script not found or not executable"
+        fi
+        ;;
+    *)
+        ;;
+esac
+
+exit 0
