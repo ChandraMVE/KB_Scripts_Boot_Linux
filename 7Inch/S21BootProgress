@@ -1,0 +1,33 @@
+#!/bin/sh
+
+MVE_QT_UPGRADE="/opt/copy_QT_Files_1v0.sh"
+MVE_SIB_UPGRADE="/opt/auto_SIB_Boot_1v0.sh"
+export QT_QPA_PLATFORM=linuxfb:fb=/dev/fb0:size=1024x600:mmSize=1024x600
+
+case "$1" in
+  start)
+  	echo KB BootProgress Check start : OK
+    	# code to start app QT Upgrade  
+    	if [ -x $MVE_QT_UPGRADE ]; then
+       	$MVE_QT_UPGRADE start
+    	fi
+
+    	# code to start to SIB upgrade  
+    	if [ -x $MVE_SIB_UPGRADE ]; then
+        	$MVE_SIB_UPGRADE start
+    	fi
+
+    	# code to start app to boot  
+#    	if [ -x $MVE_SIB_UPGRADE ]; then
+#        	$MVE_SIB_UPGRADE start
+#    	fi  	
+  	;;
+  stop)
+  	echo KB BootProgress Check stop : OK
+  ;;
+  *)
+  echo "Usage: $0 {start|stop}"
+  exit 1
+esac
+
+exit $?

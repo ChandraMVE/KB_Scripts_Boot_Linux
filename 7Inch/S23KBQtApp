@@ -1,0 +1,24 @@
+#!/bin/sh
+
+export QT_QPA_PLATFORM=linuxfb:fb=/dev/fb0:size=1024x600:mmSize=1024x600
+
+case "$1" in
+  start)
+	sleep 10
+	amixer -c sgtl5000fslaudi sset 'Headphone' on  
+        echo KitchenBrian Qt App start : OK
+	cd /root/VTC3000QT/VTC3000QT/
+        ./VTC3000QT &
+        cd ~
+        ;;
+  stop)
+        echo KitchenBrian Qt App stop : OK
+        kill -9 $(pidof VTC3000QT)
+        ;;
+  *)
+  echo "Usage: $0 {start|stop}"
+  exit 1
+
+esac
+
+exit $?
