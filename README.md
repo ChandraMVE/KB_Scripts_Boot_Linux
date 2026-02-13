@@ -11,6 +11,11 @@ Steps to Linux Upgrade:
 7. Power off and power on the system
 8. Now Factory Firmware is installed
 9. Now copy Lnx_Upgrade folder directly to root of pendrive. Make sure inside pendrive You must see only one folder "Lnx_Upgrade"
-10. Plug the Pendrive to TT700.
-11. Power off Power on TT700
-12. Wait for screen to Linux Upgrade Complete screen to come.
+10. Refer Note below and make sure you copy rootfs.rar to inside Lnx_Upgrade folder.
+11. Plug the Pendrive to TT700.
+12. Power off Power on TT700
+13. Wait for screen to Linux Upgrade Complete screen to come.
+
+# Note:
+
+Since rootfs.tar is big file of >300MB is not placed in git copy this from Onedrive to Lnx_Upgrade USB folder.
