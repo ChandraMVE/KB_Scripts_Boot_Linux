@@ -31,11 +31,30 @@ if [ -b $usbdev ];then
 		echo "#####################################"
 		echo "##########   LINUX UPGRADE   ########"
 		echo "#####################################"
+		"$UPGRADEING_LNX"	&
 		if [ -b /dev/mmcblk2p2 ]; then			
 			echo "mmcblk2p2 mount"
 			mkdir -p /root/Lnx_Upgrade
 			mount /dev/mmcblk2p2 /root/Lnx_Upgrade
 			sync
+			# ==========================================================
+			# Backup VTC3000 current application
+			# ==========================================================
+			echo "Backup current VTC3000 started"
+			rm -rf /root/Lnx_Upgrade/root/Lnx_Upgrade
+			mkdir -p /root/Lnx_Upgrade/root/Lnx_Upgrade
+			cp -r /root/VTC3000QT /root/Lnx_Upgrade/root/Lnx_Upgrade/VTC3000QT
+			sync
+			echo "Backup current VTC3000 completed"
+			
+			# ==========================================================
+			# Copy New Linux files
+			# ==========================================================
+			echo "Copy New Linux files started"
+			cp -r /root/PenDriveMount/Lnx_Upgrade /root/Lnx_Upgrade/root/Lnx_Upgrade
+			sync
+			echo "Copy New Linux files completed"
+			
 			echo "copy S22Lnx_Upgrade"
 			cp -r $PenDriveMountPath/Lnx_Upgrade/S22Lnx_Upgrade /root/Lnx_Upgrade/etc/init.d/
 			sync			
@@ -59,7 +78,7 @@ if [ -b $usbdev ];then
 			# Flash U-Boot to eMMC boot0
 			# ==========================================================
 			echo ">>> Copy U-Boot to tmp"
-			cp -r $PenDriveMountPath/Lnx_Upgrade/u-boot.imx /tmp/
+			cp -r $PenDriveMountPath/Lnx_Upgrade/u-boot_bk.imx /tmp/u-boot.imx
 			sync
 						
 			if [ -x /tmp/u-boot.imx ]; then
@@ -70,6 +89,7 @@ if [ -b $usbdev ];then
 				echo 1 > $EMMC_FORCE_RO
 			else
 				echo ">>> U-Boot not found Linux FS will fail"	
+				kill -9 $(pidof Upgrade)
 				"$UPGRADE_LNX_FAIL"	&
 				sleep 100000000
 				wait
@@ -80,6 +100,7 @@ if [ -b $usbdev ];then
 			umount $PenDriveMountPath
 			echo "Unmounting USB"
 			sync
+			kill -9 $(pidof Upgrade)
 			"$UPGRADE_LNX_COMPLETE"	&
 			sleep 100000000
 			wait			

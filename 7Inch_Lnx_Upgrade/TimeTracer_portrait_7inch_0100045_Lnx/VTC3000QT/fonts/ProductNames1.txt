@@ -1,0 +1,50 @@
+Beef Patty,./food/Beef Patty-b.png,./ProImages/Beef Patty-R.png
+Bacon,./food/Bacon-b.png,./ProImages/Bacon-R.png
+Tuna Fish,./food/Tuna Fish-b.png,./ProImages/Tuna Fish-R.png
+Beans,./food/Beans-b.png,./ProImages/Beans-R.png
+Bake Potato,./food/Bake Patato-b.png,./ProImages/Bake Patato-R.png
+Burger,./food/Burger-b.png,./ProImages/Burger-R.png
+Fish,./food/Fish Fry-b.png,./ProImages/Fish Fry-R.png
+Chicken Sandwich,./food/Chick Sandwich-b.png,./ProImages/Burger-R.png
+Chicken,./food/Roasted Chicken-b.png,./ProImages/Roasted Chicken-R.png
+Crispy Chicken,./food/Crispy Chicken-b.png,./ProImages/Crispy Chicken-R.png
+Fried Catfish,./food/Fried Catfish-b.png,./ProImages/Fried Catfish-R.png
+Steak,./food/Steak.png,./ProImages/Beef Patty-R.png
+Sausage Patty,./food/Sausage Patty-b.png,./ProImages/Sausage Patty-R.png
+Onion Rings,./food/Onion Rings-b.png,./ProImages/Onion Rings-R.png
+Wings,./food/Wings-b.png,./ProImages/Chicken Wings-R.png
+Fries,./food/French Fries-b.png,./ProImages/French Fries-R.png
+Grilled Lobster,./food/Grilled Lobster-b.png,./ProImages/Grilled Lobster-R.png
+Wild Salmon Caesar,./food/Wild Salmon Caesar-b.png,./ProImages/Fish Fry-R.png
+Recipe_19,./food/Tuna Fish-b.png,./ProImages/NoInfo-R.png
+Recipe_20,./food/Beans-b.png,./ProImages/NoInfo-R.png
+Recipe_21,./food/Beef Patty-b.png,./ProImages/NoInfo-R.png
+Recipe_22,./food/Bacon-b.png,./ProImages/NoInfo-R.png
+Recipe_23,./food/Tuna Fish-b.png,./ProImages/NoInfo-R.png
+Recipe_24,./food/Beans-b.png,./ProImages/NoInfo-R.png
+Recipe_25,./food/Beef Patty-b.png,./ProImages/NoInfo-R.png
+Recipe_26,./food/Bacon-b.png,./ProImages/NoInfo-R.png
+Recipe_27,./food/Tuna Fish-b.png,./ProImages/NoInfo-R.png
+Recipe_28,./food/Beans-b.png,./ProImages/NoInfo-R.png
+Recipe_29,./food/Beef Patty-b.png,./ProImages/NoInfo-R.png
+Recipe_30,./food/Bacon-b.png,./ProImages/NoInfo-R.png
+Recipe_31,./food/Tuna Fish-b.png,./ProImages/NoInfo-R.png
+Recipe_32,./food/Beans-b.png,./ProImages/NoInfo-R.png
+Recipe_33,./food/Beef Patty-b.png,./ProImages/NoInfo-R.png
+Recipe_34,./food/Bacon-b.png,./ProImages/NoInfo-R.png
+Recipe_35,./food/Tuna Fish-b.png,./ProImages/NoInfo-R.png
+Recipe_36,./food/Beans-b.png,./ProImages/NoInfo-R.png
+Recipe_37,./food/Beef Patty-b.png,./ProImages/NoInfo-R.png
+Recipe_38,./food/Bacon-b.png,./ProImages/NoInfo-R.png
+Recipe_39,./food/Tuna Fish-b.png,./ProImages/NoInfo-R.png
+Recipe_40,./food/Beans-b.png,./ProImages/NoInfo-R.png
+Recipe_41,./food/Beef Patty-b.png,./ProImages/NoInfo-R.png
+Recipe_42,./food/Bacon-b.png,./ProImages/NoInfo-R.png
+Recipe_43,./food/Tuna Fish-b.png,./ProImages/NoInfo-R.png
+Recipe_44,./food/Beans-b.png,./ProImages/NoInfo-R.png
+Recipe_45,./food/Beef Patty-b.png,./ProImages/NoInfo-R.png
+Recipe_46,./food/Bacon-b.png,./ProImages/NoInfo-R.png
+Recipe_47,./food/Tuna Fish-b.png,./ProImages/NoInfo-R.png
+Recipe_48,./food/Beans-b.png,./ProImages/NoInfo-R.png
+Recipe_49,./food/Beef Patty-b.png,./ProImages/NoInfo-R.png
+Recipe_50,./food/Bacon-b.png,./ProImages/NoInfo-R.png

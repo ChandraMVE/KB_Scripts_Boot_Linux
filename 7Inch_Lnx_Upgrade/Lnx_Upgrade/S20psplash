@@ -1,0 +1,49 @@
+#!/bin/sh 
+
+rotation=0
+if [ -e /etc/rotation ]; then
+	read rotation < /etc/rotation
+fi
+
+case "$1" in
+  start)
+        echo psplash start : OK
+        /usr/bin/psplash --angle $rotation &
+
+        secs=$((100))
+        while [ $secs -gt 0 ]; do
+                secs=$((secs-1))
+                psplash-write "PROGRESS $((100-secs))"
+        done
+        ;;
+  stop)
+  	echo psplash stop : OK 
+  	/usr/bin/psplash --angle $rotation &	
+	psplash-write "PROGRESS 90"
+	sleep 0.2
+	psplash-write "PROGRESS 80"
+	sleep 0.2
+	psplash-write "PROGRESS 70"
+	sleep 0.2
+	psplash-write "PROGRESS 60"
+	sleep 0.2
+	psplash-write "PROGRESS 50"
+	sleep 0.2
+	psplash-write "PROGRESS 40"
+	sleep 0.2
+	psplash-write "PROGRESS 30"
+	sleep 0.2
+	psplash-write "PROGRESS 20"
+	sleep 0.2
+	psplash-write "PROGRESS 10"
+	sleep 0.2
+	psplash-write "PROGRESS 0"
+	sleep 0.2
+  	;;
+  *)
+  echo "Usage: $0 {start|stop}"
+  exit 1
+  
+esac
+
+exit $?
