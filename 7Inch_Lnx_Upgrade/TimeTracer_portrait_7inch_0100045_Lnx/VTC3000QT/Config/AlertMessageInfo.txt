@@ -1,0 +1,5 @@
+Checklist*./food/checklist.png*300*300*0*1*4*0*1*300*
+Stir*./food/stir.png*300*300*0*4*4*0*0*300*
+Clean Shake*./food/shake.png*300*300*0*4*3*0*0*300*
+Rinse vegetables*./food/wash veg.jpg*300*300*0*0*4*0*1*300*
+

@@ -1,0 +1,31 @@
+	signal: -37.00 dBm
+	SSID: Smitch-S39c
+	signal: -66.00 dBm
+	SSID: ACT-ai_102647168929
+	WPA:	 * Version: 1
+		 * Group cipher: TKIP
+		 * Pairwise ciphers: TKIP CCMP
+	RSN:	 * Version: 1
+		 * Group cipher: TKIP
+		 * Pairwise ciphers: TKIP CCMP
+	signal: -63.00 dBm
+	SSID: 65ED56-G3000series
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+	signal: -51.00 dBm
+	SSID: MicroVisionEmbedded_2G4
+	WPA:	 * Version: 1
+		 * Group cipher: TKIP
+		 * Pairwise ciphers: TKIP
+	RSN:	 * Version: 1
+		 * Group cipher: TKIP
+		 * Pairwise ciphers: CCMP
+	signal: -77.00 dBm
+	SSID: 
+		 * SSID List
+	RSN:	 * Version: 1
+		 * Group cipher: CCMP
+		 * Pairwise ciphers: CCMP
+	signal: -88.00 dBm
+	SSID: Lab

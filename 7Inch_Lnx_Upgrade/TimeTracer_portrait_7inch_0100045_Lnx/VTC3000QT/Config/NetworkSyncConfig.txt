@@ -1,0 +1,4 @@
+NetworkTimeSync 1 
+TimeZoneIndex 246 
+TimeZoneName Asia/Kolkata 
+

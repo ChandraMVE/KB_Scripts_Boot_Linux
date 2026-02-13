@@ -1,0 +1,43 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          flash_emmc
+# Required-Start:    $local_fs
+# Default-Start:     S
+# Short-Description: Flash eMMC from SD card
+### END INIT INFO
+
+FLASH_SCRIPT="/root/emmc_full_flash.sh"
+DEBUG_LEDS="/root/Debug_Leds.sh"
+
+case "$1" in
+    start)
+        echo "=== eMMC Flash Init Script ==="
+
+        if [ -x "$FLASH_SCRIPT" ]; then
+            echo "Starting eMMC flashing..."
+	    "$DEBUG_LEDS" blink_leds &
+            "$FLASH_SCRIPT"
+            if [ $? -eq 0 ]; then
+                sync
+                echo "eMMC flashing successful"
+		kill -9 $(pidof Debug_Leds.sh)
+		sleep 2
+		"$DEBUG_LEDS" amber_on &
+#                echo "Powering off..."
+#                poweroff -f
+            else
+                echo "eMMC flashing FAILED"
+		kill -9 $(pidof Debug_Leds.sh)
+		sleep 2
+		"$DEBUG_LEDS" red_on &
+            fi
+        else
+            echo "Flash script not found or not executable"
+        fi
+        ;;
+    *)
+        ;;
+esac
+
+exit 0

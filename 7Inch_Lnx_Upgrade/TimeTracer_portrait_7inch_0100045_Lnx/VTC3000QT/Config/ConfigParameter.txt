@@ -1,0 +1,8 @@
+Brightness,10
+Master Volume,7
+DimBrightness,6
+Dim Timer,15
+Auto DayPart Enabled,0
+Device Mode,GRILL STATION
+Transfer Mode,REMOTE
+Tcp File Import Status,0

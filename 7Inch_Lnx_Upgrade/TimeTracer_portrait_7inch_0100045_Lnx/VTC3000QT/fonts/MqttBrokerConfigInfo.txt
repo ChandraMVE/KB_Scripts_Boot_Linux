@@ -1,0 +1,4 @@
+broker.emqx.io
+1883
+microvision
+Qwerty#123
