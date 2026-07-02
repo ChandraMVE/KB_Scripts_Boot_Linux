@@ -198,8 +198,8 @@ if [ -b $usbdev ];then
 		cp -r $PenDriveMountPath/Upgrade_failed $APP_DIR/
 		cp -r $PenDriveMountPath/lnx_Upgrade_critical $APP_DIR/
 		cp $PenDriveMountPath/VTC3000QT_update.sh $APP_DIR/
-	
-		rm -rf $PenDriveMountPath/CheckMe.txt
+		#We donot want to remove Checkme for application upgrade	
+		#rm -rf $PenDriveMountPath/CheckMe.txt	
 		sync
 		cp -r $PenDriveMountPath/VTC3000QT $APP_DIR/	
 		sleep 1
