@@ -26,6 +26,8 @@ if [ -b $usbdev ];then
 	CHECK_FILE='/root/PenDriveMount/CheckMe.txt'
 	CHECK_FILE_FS='/root/PenDriveMount/copy_QT_Files_1v0.sh'
 	CHECK_FILE_LNX='/root/PenDriveMount/Lnx_Upgrade/Lnx_Upgrade.txt'
+	ZIMAGE_FILE="/root/PenDriveMount/Lnx_Upgrade/zImage"
+	DTB_FILE="/root/PenDriveMount/Lnx_Upgrade/imx6dl-kb-nextgen.dtb"
 	
 	if [ -x $CHECK_FILE_LNX ]; then
 		echo "#####################################"
@@ -105,7 +107,7 @@ if [ -b $usbdev ];then
 			sleep 100000000
 			wait			
 		else
-			echo "mmcblk2p6 not present do nothing"
+			echo "mmcblk2p2 not present do nothing"
 		fi
 	fi
 	
@@ -114,8 +116,39 @@ if [ -b $usbdev ];then
 		#echo 0 > /etc/rotation
 		rm -rf $APP_DIR
 		mkdir -p $APP_DIR
-
 		sleep 2	
+
+		if [ -f "/root/PenDriveMount/zImage" ] || [ -f "/root/PenDriveMount/imx6dl-kb-nextgen.dtb" ]; then
+			echo "#####################################"
+			echo "############Kernel and DTB UPDATE...."
+			echo "#####################################"
+			mkdir -p  /root/Deleteme
+			mount /dev/mmcblk2p1 /root/Deleteme
+			cp -r /root/PenDriveMount/zImage /root/Deleteme/
+			sync
+			cp -r /root/PenDriveMount/imx6dl-kb-nextgen.dtb /root/Deleteme/
+			sync
+			umount /root/Deleteme
+			
+			mount /dev/mmcblk2p3 /root/Deleteme
+			cp -r /root/PenDriveMount/zImage /root/Deleteme/
+			sync
+			cp -r /root/PenDriveMount/imx6dl-kb-nextgen.dtb /root/Deleteme/
+			sync
+			umount /root/Deleteme
+			rm -rf /root/Deleteme
+			rm -rf $PenDriveMountPath/CheckMe.txt
+			sync
+			
+			cp -r $PenDriveMountPath/VTC3000QT $APP_DIR/
+			sync
+			sleep 10
+			reboot
+			echo "#####################################"
+			echo "#####   KERNEL & DTB UPDATED   ######"
+			echo "#####################################"
+		fi
+		
 		if [ -x $CHECK_FILE_FS ]; then
 			echo "#####################################"
 			echo "##########CRITICAL FS UPGRADE########"
@@ -146,8 +179,12 @@ if [ -b $usbdev ];then
 			export QT_QPA_PLATFORM=linuxfb:fb=/dev/fb0:size=1024x600:mmSize=1024x600
 			./lnx_Upgrade_critical &
 			"$UPGRADE_LNX_COMPLETE"	&
-			sleep 100000000
-			wait
+			sync
+			sleep 10
+			reboot
+			echo "#####################################"
+			echo "#### copy_QT_Files_1v0 updated ######"
+			echo "#####################################"
 		fi
 
 		echo "#####################################"
