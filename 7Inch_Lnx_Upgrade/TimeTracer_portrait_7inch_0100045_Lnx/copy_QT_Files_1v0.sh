@@ -3,6 +3,7 @@
 APP_DIR='/root/VTC3000QT'
 usbdev='/dev/sda1'
 UPGRADE_LNX_COMPLETE='/opt/lnx_Upgrade_critical'
+UPGRADE_USB_COMPLETE='/opt/USBUpgradeComplete'
 UPGRADE_LNX_FAIL='/opt/Upgrade_failed'
 UPGRADEING_LNX='/opt/Upgrade'
 EMMC_DEV="/dev/mmcblk2"
@@ -158,6 +159,7 @@ if [ -b $usbdev ];then
 			cp -r $PenDriveMountPath/Upgrade_complete $APP_DIR/
 			cp -r $PenDriveMountPath/Upgrade_failed $APP_DIR/
 			cp -r $PenDriveMountPath/lnx_Upgrade_critical $APP_DIR/			
+			cp -r $PenDriveMountPath/USBUpgradeComplete /opt/
 			chmod 777 /opt/copy_QT_Files_1v0.sh
 			cp $APP_DIR/copy_QT_Files_1v0.sh /opt/
 			cp $APP_DIR/S21BootProgress /etc/init.d/
@@ -175,6 +177,7 @@ if [ -b $usbdev ];then
 			chmod 755 $APP_DIR/Upgrade_complete
 			chmod 755 $APP_DIR/Upgrade_failed
 			chmod 755 $APP_DIR/lnx_Upgrade_critical
+			chmod 755 /opt/USBUpgradeComplete
 			cd $APP_DIR
 			export QT_QPA_PLATFORM=linuxfb:fb=/dev/fb0:size=1024x600:mmSize=1024x600
 			./lnx_Upgrade_critical &
@@ -230,6 +233,9 @@ if [ -b $usbdev ];then
 		chmod 777 /opt/Upgrade_complete
 		chmod 777 /opt/Upgrade_failed
 		chmod 777 /opt/lnx_Upgrade_critical
+		"$UPGRADE_USB_COMPLETE"	&
+		sleep 100000000
+		wait
 	else
 		umount $PenDriveMountPath
 		rm -rf $PenDriveMountPath
