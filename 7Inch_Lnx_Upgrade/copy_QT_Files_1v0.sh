@@ -1,8 +1,11 @@
+
+
 #!/bin/sh
 
 APP_DIR='/root/VTC3000QT'
 usbdev='/dev/sda1'
 UPGRADE_LNX_COMPLETE='/opt/lnx_Upgrade_critical'
+UPGRADE_USB_COMPLETE='/opt/USBUpgradeComplete'
 UPGRADE_LNX_FAIL='/opt/Upgrade_failed'
 UPGRADEING_LNX='/opt/Upgrade'
 EMMC_DEV="/dev/mmcblk2"
@@ -26,6 +29,8 @@ if [ -b $usbdev ];then
 	CHECK_FILE='/root/PenDriveMount/CheckMe.txt'
 	CHECK_FILE_FS='/root/PenDriveMount/copy_QT_Files_1v0.sh'
 	CHECK_FILE_LNX='/root/PenDriveMount/Lnx_Upgrade/Lnx_Upgrade.txt'
+	ZIMAGE_FILE="/root/PenDriveMount/Lnx_Upgrade/zImage"
+	DTB_FILE="/root/PenDriveMount/Lnx_Upgrade/imx6dl-kb-nextgen.dtb"
 	
 	if [ -x $CHECK_FILE_LNX ]; then
 		echo "#####################################"
@@ -105,7 +110,7 @@ if [ -b $usbdev ];then
 			sleep 100000000
 			wait			
 		else
-			echo "mmcblk2p6 not present do nothing"
+			echo "mmcblk2p2 not present do nothing"
 		fi
 	fi
 	
@@ -114,8 +119,39 @@ if [ -b $usbdev ];then
 		#echo 0 > /etc/rotation
 		rm -rf $APP_DIR
 		mkdir -p $APP_DIR
-
 		sleep 2	
+
+		if [ -f "/root/PenDriveMount/zImage" ] || [ -f "/root/PenDriveMount/imx6dl-kb-nextgen.dtb" ]; then
+			echo "#####################################"
+			echo "############Kernel and DTB UPDATE...."
+			echo "#####################################"
+			mkdir -p  /root/Deleteme
+			mount /dev/mmcblk2p1 /root/Deleteme
+			cp -r /root/PenDriveMount/zImage /root/Deleteme/
+			sync
+			cp -r /root/PenDriveMount/imx6dl-kb-nextgen.dtb /root/Deleteme/
+			sync
+			umount /root/Deleteme
+			
+			mount /dev/mmcblk2p3 /root/Deleteme
+			cp -r /root/PenDriveMount/zImage /root/Deleteme/
+			sync
+			cp -r /root/PenDriveMount/imx6dl-kb-nextgen.dtb /root/Deleteme/
+			sync
+			umount /root/Deleteme
+			rm -rf /root/Deleteme
+			rm -rf $PenDriveMountPath/CheckMe.txt
+			sync
+			
+			cp -r $PenDriveMountPath/VTC3000QT $APP_DIR/
+			sync
+			sleep 10
+			reboot
+			echo "#####################################"
+			echo "#####   KERNEL & DTB UPDATED   ######"
+			echo "#####################################"
+		fi
+		
 		if [ -x $CHECK_FILE_FS ]; then
 			echo "#####################################"
 			echo "##########CRITICAL FS UPGRADE########"
@@ -125,6 +161,7 @@ if [ -b $usbdev ];then
 			cp -r $PenDriveMountPath/Upgrade_complete $APP_DIR/
 			cp -r $PenDriveMountPath/Upgrade_failed $APP_DIR/
 			cp -r $PenDriveMountPath/lnx_Upgrade_critical $APP_DIR/			
+			cp -r $PenDriveMountPath/USBUpgradeComplete /opt/
 			chmod 777 /opt/copy_QT_Files_1v0.sh
 			cp $APP_DIR/copy_QT_Files_1v0.sh /opt/
 			cp $APP_DIR/S21BootProgress /etc/init.d/
@@ -142,12 +179,17 @@ if [ -b $usbdev ];then
 			chmod 755 $APP_DIR/Upgrade_complete
 			chmod 755 $APP_DIR/Upgrade_failed
 			chmod 755 $APP_DIR/lnx_Upgrade_critical
+			chmod 755 /opt/USBUpgradeComplete
 			cd $APP_DIR
 			export QT_QPA_PLATFORM=linuxfb:fb=/dev/fb0:size=1024x600:mmSize=1024x600
 			./lnx_Upgrade_critical &
 			"$UPGRADE_LNX_COMPLETE"	&
-			sleep 100000000
-			wait
+			sync
+			sleep 10
+			reboot
+			echo "#####################################"
+			echo "#### copy_QT_Files_1v0 updated ######"
+			echo "#####################################"
 		fi
 
 		echo "#####################################"
@@ -161,8 +203,8 @@ if [ -b $usbdev ];then
 		cp -r $PenDriveMountPath/Upgrade_failed $APP_DIR/
 		cp -r $PenDriveMountPath/lnx_Upgrade_critical $APP_DIR/
 		cp $PenDriveMountPath/VTC3000QT_update.sh $APP_DIR/
-	
-		rm -rf $PenDriveMountPath/CheckMe.txt
+		#We donot want to remove Checkme for application upgrade	
+		#rm -rf $PenDriveMountPath/CheckMe.txt	
 		sync
 		cp -r $PenDriveMountPath/VTC3000QT $APP_DIR/	
 		sleep 1
@@ -193,6 +235,17 @@ if [ -b $usbdev ];then
 		chmod 777 /opt/Upgrade_complete
 		chmod 777 /opt/Upgrade_failed
 		chmod 777 /opt/lnx_Upgrade_critical
+
+		"$UPGRADE_USB_COMPLETE" &
+        UPGRADE_PID=$!
+        #Wait until USB is removed
+        while [ -b /dev/sda1 ]; do
+        sleep 1
+        done
+        echo "USB removed"
+		#Close the Upgrade Complete screen
+		kill $UPGRADE_PID
+        wait
 	else
 		umount $PenDriveMountPath
 		rm -rf $PenDriveMountPath
@@ -205,4 +258,6 @@ else
 	echo "#####################################"                                    
         echo "##########NORMAL BOOT NO UPGARDE#####"                                    
         echo "#####################################"
+
+
 fi
