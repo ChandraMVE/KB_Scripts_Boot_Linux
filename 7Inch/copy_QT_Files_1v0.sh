@@ -1,3 +1,5 @@
+
+
 #!/bin/sh
 
 APP_DIR='/root/VTC3000QT'
@@ -233,9 +235,17 @@ if [ -b $usbdev ];then
 		chmod 777 /opt/Upgrade_complete
 		chmod 777 /opt/Upgrade_failed
 		chmod 777 /opt/lnx_Upgrade_critical
-		"$UPGRADE_USB_COMPLETE"	&
-		sleep 100000000
-		wait
+
+		"$UPGRADE_USB_COMPLETE" &
+        UPGRADE_PID=$!
+        #Wait until USB is removed
+        while [ -b /dev/sda1 ]; do
+        sleep 1
+        done
+        echo "USB removed"
+		#Close the Upgrade Complete screen
+		kill $UPGRADE_PID
+        wait
 	else
 		umount $PenDriveMountPath
 		rm -rf $PenDriveMountPath
@@ -248,4 +258,6 @@ else
 	echo "#####################################"                                    
         echo "##########NORMAL BOOT NO UPGARDE#####"                                    
         echo "#####################################"
+
+
 fi
